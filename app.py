@@ -19,8 +19,7 @@ from pathlib import Path
 import gradio as gr
 
 from config import UPLOADED_DOCS_PATH
-from rag_pipeline import query as rag_query, add_documents_to_index
-from memory_manager import clear_memory
+from pipeline import query as rag_query, add_documents_to_index, clear_memory
 
 logging.basicConfig(
     level=logging.INFO,
