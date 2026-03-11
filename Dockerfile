@@ -31,7 +31,6 @@ RUN python ingest.py
 EXPOSE 7860
 
 ENV GROQ_API_KEY=""
-ENV FLASK_SECRET_KEY=""
 ENV HF_HOME=/home/appuser/.cache/huggingface
 
 CMD ["python", "app.py"]
