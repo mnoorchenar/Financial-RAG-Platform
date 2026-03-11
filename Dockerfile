@@ -29,9 +29,13 @@ RUN pip install --no-cache-dir -r requirements.txt
 # GROQ_API_KEY is injected at runtime via HuggingFace Space Secret.
 COPY --chown=appuser:appuser . .
 
-# ── Prepare Data Directories ───────────────────────────────────────────────────
+# ── Prepare Data Directories + Bootstrap config.py (still root) ───────────────
+# All filesystem writes that need root permissions happen here, before USER appuser.
+# config.py is gitignored so it never arrives from git — copy the committed
+# example template so ingest.py has a valid config module to import.
 RUN mkdir -p data/docs data/uploads data/faiss_index \
-    && chown -R appuser:appuser data/
+    && cp config.example.py config.py \
+    && chown -R appuser:appuser /app
 
 # ── Switch to Non-root User ────────────────────────────────────────────────────
 USER appuser
@@ -39,15 +43,8 @@ USER appuser
 # ── Cache the Sentence-Transformer Model ──────────────────────────────────────
 # Pre-downloading the model into the image layer means ingest.py and app.py
 # never need an outbound network call to HuggingFace Hub at runtime.
-# The model (~90 MB) is stored at the path HuggingFace Transformers expects.
 ENV HF_HOME=/home/appuser/.cache/huggingface
 RUN python -c "from sentence_transformers import SentenceTransformer; SentenceTransformer('sentence-transformers/all-MiniLM-L6-v2')"
-
-# ── Bootstrap config.py from the committed example template ───────────────────
-# config.py is gitignored (holds the private Groq key for local dev).
-# ingest.py only needs paths and embedding settings — not the Groq key —
-# so the blank example template is perfectly sufficient for the build step.
-RUN cp config.example.py config.py
 
 # ── Pre-build FAISS Index (baked into image — zero cold-start latency) ─────────
 # Downloads public PDFs from FDIC / NAIC / SEC.
