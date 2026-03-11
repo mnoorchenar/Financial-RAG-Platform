@@ -1,7 +1,6 @@
-# Exclude private config from Docker image layer
+# Exclude ONLY the private config — example template must reach the image
 config.py
-.env
-.env.*
+# Never exclude config.example.py — the Dockerfile copies it to config.py at build time
 
 # Exclude large generated data (rebuilt at image build time by ingest.py)
 data/faiss_index/

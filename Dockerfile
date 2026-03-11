@@ -28,9 +28,17 @@ RUN mkdir -p data/docs data/uploads data/faiss_index \
 # ── Switch to Non-root User ────────────────────────────────────────────────────
 USER appuser
 
+# ── Bootstrap config.py from the committed example template ───────────────────
+# config.py is gitignored (it holds the private Groq key for local dev).
+# ingest.py only needs paths and embedding settings from config — not the key —
+# so copying the blank example is sufficient for the build step.
+# At runtime, GROQ_API_KEY is injected via the HuggingFace Space Secret and
+# config.py reads it through os.environ.get("GROQ_API_KEY") with priority 1.
+RUN cp config.example.py config.py
+
 # ── Pre-build FAISS Index (baked into image — zero cold-start latency) ─────────
 # Downloads public PDFs from FDIC/NAIC/SEC; falls back to synthetic corpus
-# if network is unavailable during the HuggingFace build.
+# automatically if any download fails during the HuggingFace build.
 RUN python ingest.py
 
 # ── Expose Port ────────────────────────────────────────────────────────────────
