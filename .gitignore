@@ -1,7 +1,44 @@
-﻿__pycache__/
-*.pyc
+﻿# ── Private Config (contains API keys — NEVER commit) ─────────────────────────
+config.py
+
+# ── Environment Files ──────────────────────────────────────────────────────────
 .env
-.DS_Store
-*.log
+.env.*
+!.env.example
+
+# ── Generated / Downloaded Data ────────────────────────────────────────────────
+data/faiss_index/
+data/uploads/
+data/docs/*.pdf
+
+# ── Python Cache ───────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.pyo
+.eggs/
+*.egg-info/
+dist/
+build/
+
+# ── Virtual Environments ───────────────────────────────────────────────────────
+venv/
+.venv/
+env/
+.env/
+
+# ── IDEs ───────────────────────────────────────────────────────────────────────
 .vscode/
-*.tmp
+.idea/
+*.swp
+*.swo
+
+# ── OS ─────────────────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+
+# ── Logs ───────────────────────────────────────────────────────────────────────
+*.log
+logs/
+
+# ── Notebooks ──────────────────────────────────────────────────────────────────
+.ipynb_checkpoints/

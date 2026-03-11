@@ -1,0 +1,22 @@
+# Exclude private config from Docker image layer
+config.py
+.env
+.env.*
+
+# Exclude large generated data (rebuilt at image build time by ingest.py)
+data/faiss_index/
+data/uploads/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# Dev tools
+.git/
+.gitignore
+.vscode/
+.idea/
+*.md
+notebooks/
+tests/
