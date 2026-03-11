@@ -1,30 +1,16 @@
-# ── LangChain Core Stack ───────────────────────────────────────────────────────
+flask==3.0.3
 langchain==0.3.7
 langchain-community==0.3.7
 langchain-groq==0.2.1
 langchain-huggingface==0.1.2
 langchain-text-splitters==0.3.2
-
-# ── Vector Store ───────────────────────────────────────────────────────────────
 faiss-cpu==1.8.0
-
-# ── Embeddings ─────────────────────────────────────────────────────────────────
-# torch is installed as CPU-only in the Dockerfile via --index-url
-# Do NOT add torch here — it is installed explicitly in the Dockerfile first
+# torch installed CPU-only in Dockerfile before this file — do not add it here
 sentence-transformers==3.0.1
 transformers==4.44.2
 huggingface-hub==0.24.7
-
-# ── LLM Backend ───────────────────────────────────────────────────────────────
 groq==0.11.0
-
-# ── Document Processing ────────────────────────────────────────────────────────
 pypdf==4.3.1
-
-# ── UI ─────────────────────────────────────────────────────────────────────────
-gradio==4.44.1
-
-# ── Utilities ──────────────────────────────────────────────────────────────────
 requests==2.32.3
 numpy==1.26.4
 python-dotenv==1.0.1
