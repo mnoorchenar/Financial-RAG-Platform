@@ -1,4 +1,4 @@
-﻿---
+---
 title: Financial Document Intelligence Platform using Retrieval-Augmented Generation RAG LangChain FAISS and LLaMA 3.3 70B
 colorFrom: blue
 colorTo: indigo
@@ -9,7 +9,6 @@ sdk: docker
 
 <h1>🏦 Financial Document Intelligence Platform</h1>
 <h3>using Retrieval-Augmented Generation (RAG), LangChain, FAISS &amp; LLaMA 3.3 70B</h3>
-
 <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=20&duration=3000&pause=1000&color=3b82f6&center=true&vCenter=true&width=820&lines=RAG+Pipeline+%7C+LangChain+%7C+FAISS+%7C+LLaMA+3.3+70B;Banking+%26+Insurance+Document+Intelligence;Multi-turn+Memory+%7C+Confidence+Scoring+%7C+Guardrails;Deployed+on+HuggingFace+Spaces+via+Docker+SDK" alt="Typing SVG"/>
 
 <br/>
@@ -20,8 +19,12 @@ sdk: docker
 [![Groq](https://img.shields.io/badge/Groq-LLaMA_3.3_70B-f59e0b?style=for-the-badge)](https://groq.com/)
 [![FAISS](https://img.shields.io/badge/FAISS-CPU-3b82f6?style=for-the-badge)](https://faiss.ai/)
 [![Docker](https://img.shields.io/badge/Docker-Ready-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://www.docker.com/)
-[![HuggingFace](https://img.shields.io/badge/HuggingFace-Spaces-ffcc00?style=for-the-badge&logo=huggingface&logoColor=black)](https://huggingface.co/spaces/mnoorchenar/Financial-RAG-Platform)
 [![Status](https://img.shields.io/badge/Status-Active-22c55e?style=for-the-badge)](#)
+
+<br/>
+
+[![Live Demo](https://img.shields.io/badge/%E2%96%B6_Live_Demo-Hugging_Face_Space-ffcc00?style=for-the-badge&logo=huggingface&logoColor=black)](https://huggingface.co/spaces/mnoorchenar/Financial-RAG-Platform)
+[![Source Code](https://img.shields.io/badge/Source_Code-GitHub-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/mnoorchenar/Financial-RAG-Platform)
 
 <br/>
 
@@ -45,7 +48,7 @@ sdk: docker
 - [Project Structure](#-project-structure)
 - [Author](#-author)
 - [Contributing](#-contributing)
-- [Disclaimer](#disclaimer)
+- [Disclaimer](#️-disclaimer)
 - [License](#-license)
 
 ---
@@ -158,7 +161,6 @@ sdk: docker
 ### Prerequisites
 
 - Python 3.10+
-- Docker and Docker Compose
 - A free [Groq API key](https://console.groq.com/) (free tier is sufficient)
 - Git
 
@@ -166,8 +168,8 @@ sdk: docker
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/mnoorchenar/financial-rag-intelligence-platform.git
-cd financial-rag-intelligence-platform
+git clone https://github.com/mnoorchenar/Financial-RAG-Platform.git
+cd Financial-RAG-Platform
 
 # 2. Create and activate a virtual environment
 python -m venv venv
@@ -206,9 +208,7 @@ docker build -t financial-rag-platform .
 # Run with your Groq API key injected as an environment variable
 docker run -p 7860:7860 -e GROQ_API_KEY=gsk_your_key_here financial-rag-platform
 
-# Or set the key in a .env file and use Docker Compose
 echo "GROQ_API_KEY=gsk_your_key_here" > .env
-docker compose up --build
 ```
 
 Open your browser at `http://localhost:7860` 🎉
@@ -274,40 +274,14 @@ models = {
 ## 📁 Project Structure
 
 ```
-financial-rag-intelligence-platform/
+Financial-RAG-Platform/
 │
-├── 📄 app.py                    # Gradio UI + application entry point (3 tabs, dark theme)
-├── 📄 config.py                 # ⚠️  GITIGNORED — private config, Groq API key lives here
-├── 📄 config.example.py         # Committed template for contributors — copy → config.py
-├── 📄 ingest.py                 # PDF download · chunking · embedding · FAISS index builder
-├── 📄 rag_pipeline.py           # ConversationalRetrievalChain · MMR retriever · source formatter
-├── 📄 memory_manager.py         # Thread-safe UUID-keyed ConversationBufferWindowMemory registry
-├── 📄 guardrails.py             # Two-stage domain filter — keyword scan + off-topic regex
-├── 📄 confidence.py             # FAISS L2 → cosine · exp-decay weighted score → HIGH/MEDIUM/LOW
-├── 📄 evaluation.py             # RAGAS-inspired local quality metrics — no external API needed
-│
-├── 📄 requirements.txt          # Python dependencies with version bounds
-├── 📄 Dockerfile                # python:3.10-slim · runs ingest.py at build · non-root appuser
-├── 📄 .gitignore                # Excludes config.py · .env · data/faiss_index/ · data/docs/*.pdf
-├── 📄 .dockerignore             # Strips config.py and secrets from every Docker image layer
-├── 📄 README.md                 # This file
-│
-└── 📂 data/                     # Created automatically by ingest.py — do not create manually
-    ├── 📂 docs/                 # Downloaded PDFs + built-in synthetic .txt corpus
-    │   ├── FDIC_Your_Insured_Deposits.pdf
-    │   ├── SEC_Beginners_Guide_To_Financial_Statements.pdf
-    │   ├── NAIC_Life_Insurance_Buyers_Guide.pdf
-    │   ├── FDIC_Consumer_News.pdf
-    │   ├── banking_fundamentals.txt
-    │   ├── insurance_guide.txt
-    │   ├── financial_statements_guide.txt
-    │   └── risk_management_banking.txt
-    │
-    ├── 📂 uploads/              # Runtime user-uploaded PDFs (merged into live FAISS index)
-    │
-    └── 📂 faiss_index/          # ⚠️  GITIGNORED — rebuilt by ingest.py at every build
-        ├── index.faiss
-        └── index.pkl
+├── 📄 .dockerignore              # Strips config.py and secrets from every Docker image layer
+├── 📄 Dockerfile                 # python:3.10-slim · runs ingest.py at build · non-root appuser
+├── 📄 app.py                     # Gradio UI + application entry point (3 tabs, dark theme)
+├── 📄 ingest.py                  # PDF download · chunking · embedding · FAISS index builder
+├── 📄 pipeline.py
+└── 📄 requirements.txt           # Python dependencies with version bounds
 ```
 
 ---
@@ -332,7 +306,7 @@ financial-rag-intelligence-platform/
 
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/mnoorchenar)&nbsp;
 [![Personal Site](https://img.shields.io/badge/Website-mnoorchenar.github.io-4f46e5?style=for-the-badge&logo=githubpages&logoColor=white)](https://mnoorchenar.github.io/)&nbsp;
-[![HuggingFace](https://img.shields.io/badge/HuggingFace-ffcc00?style=for-the-badge&logo=huggingface&logoColor=black)](https://huggingface.co/spaces/mnoorchenar/Financial-RAG-Platform)&nbsp;
+[![HuggingFace](https://img.shields.io/badge/HuggingFace-ffcc00?style=for-the-badge&logo=huggingface&logoColor=black)](https://huggingface.co/mnoorchenar)&nbsp;
 [![Google Scholar](https://img.shields.io/badge/Scholar-4285F4?style=for-the-badge&logo=googlescholar&logoColor=white)](https://scholar.google.ca/citations?user=nn_Toq0AAAAJ&hl=en)&nbsp;
 [![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/mnoorchenar)
 
@@ -354,19 +328,18 @@ Contributions are welcome! Please follow these steps:
 4. **Push** to the branch: `git push origin feature/amazing-feature`
 5. **Open** a Pull Request
 
-> **Important:** Never commit `config.py` or any file containing API keys. Always use `config.example.py` as your template.
-
 ---
 
-## Disclaimer
+## ⚠️ Disclaimer
 
-<span style="color:red">This project is developed strictly for educational and research purposes and does not constitute professional financial, legal, investment, or regulatory advice of any kind. All datasets used are either synthetically generated or publicly available from official government sources (FDIC, SEC, NAIC) — no real user data is stored or processed at any point. This software is provided "as is" without warranty of any kind; use at your own risk.</span>
+> [!WARNING]
+> This project is developed strictly for educational and research purposes and does not constitute professional financial, legal, investment, or regulatory advice of any kind. All datasets used are either synthetically generated or publicly available from official government sources (FDIC, SEC, NAIC) — no real user data is stored or processed at any point. This software is provided "as is" without warranty of any kind; use at your own risk.
 
 ---
 
 ## 📜 License
 
-Distributed under the **MIT License**. See [`LICENSE`](LICENSE) for more information.
+Distributed under the **MIT License**.
 
 ---
 
@@ -374,9 +347,9 @@ Distributed under the **MIT License**. See [`LICENSE`](LICENSE) for more informa
 
 <img src="https://capsule-render.vercel.app/api?type=waving&color=0:3b82f6,100:4f46e5&height=120&section=footer&text=Made%20with%20%E2%9D%A4%EF%B8%8F%20by%20Mohammad%20Noorchenarboo&fontColor=ffffff&fontSize=18&fontAlignY=80" width="100%"/>
 
-[![GitHub Stars](https://img.shields.io/github/stars/mnoorchenar/financial-rag-intelligence-platform?style=social)](https://github.com/mnoorchenar/financial-rag-intelligence-platform)
-[![GitHub Forks](https://img.shields.io/github/forks/mnoorchenar/financial-rag-intelligence-platform?style=social)](https://github.com/mnoorchenar/financial-rag-intelligence-platform/fork)
+[![GitHub Stars](https://img.shields.io/github/stars/mnoorchenar/Financial-RAG-Platform?style=social)](https://github.com/mnoorchenar/Financial-RAG-Platform/stargazers)
+[![GitHub Forks](https://img.shields.io/github/forks/mnoorchenar/Financial-RAG-Platform?style=social)](https://github.com/mnoorchenar/Financial-RAG-Platform/fork)
 
-<sub>This project is developed for academic and research purposes only. Any similarity to existing company names, products, or trademarks is entirely coincidental and unintentional. This project has no affiliation with any commercial entity including FDIC, NAIC, SEC, Groq, Meta, or HuggingFace.</sub>
+<sub>The name "Financial Document Intelligence Platform" is used purely for academic and research purposes. Any similarity to existing product names or trademarks is entirely coincidental. This project has no affiliation with any commercial entity.</sub>
 
 </div>
